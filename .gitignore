@@ -1,0 +1,13 @@
+docs/
+CLAUDE.md
+.claude
+.superpowers/
+
+# Legal & business documents
+*.docx
+*.pdf
+
+# System files
+.DS_Store
+._*
+test.txt
