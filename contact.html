@@ -263,7 +263,7 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="first-name">First name <span style="color:var(--green)">*</span></label>
+                  <label for="first-name">First name <span style="color:var(--amber)">*</span></label>
                   <input type="text" id="first-name" name="first_name" placeholder="Jane" required autocomplete="given-name">
                 </div>
                 <div class="form-group">
@@ -274,18 +274,18 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="email">Email <span style="color:var(--green)">*</span></label>
+                  <label for="email">Email <span style="color:var(--amber)">*</span></label>
                   <input type="email" id="email" name="email" placeholder="jane@example.com" required autocomplete="email">
                 </div>
                 <div class="form-group">
                   <label for="phone">Phone number</label>
-                  <input type="tel" id="phone" name="phone" placeholder="(801) 555-0000" autocomplete="tel">
+                  <input type="tel" id="phone" name="phone" placeholder="(801) 555-0000" autocomplete="tel" inputmode="tel">
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="dog-name">Your dog's name <span style="color:var(--green)">*</span></label>
+                  <label for="dog-name">Your dog's name <span style="color:var(--amber)">*</span></label>
                   <input type="text" id="dog-name" name="dog_name" placeholder="Biscuit" required>
                 </div>
                 <div class="form-group">
@@ -321,7 +321,30 @@
               </div>
 
               <div class="form-group">
-                <label for="message">Tell me about your dog and what's going on <span style="color:var(--green)">*</span></label>
+                <label id="referral-label">How did you find us?</label>
+                <div class="custom-select" id="referral-select" role="combobox" aria-labelledby="referral-label" aria-haspopup="listbox" aria-expanded="false">
+                  <button type="button" class="custom-select-trigger" id="referral-trigger">
+                    <span class="custom-select-value placeholder">Select an option…</span>
+                    <svg viewBox="0 0 12 8" width="12" height="8" fill="none" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                  <ul class="custom-select-dropdown" role="listbox" id="referral-listbox" aria-labelledby="referral-label">
+                    <li class="custom-select-option" role="option" data-value="" aria-selected="true">Select an option…</li>
+                    <li class="custom-select-option" role="option" data-value="google_search" aria-selected="false">Google Search</li>
+                    <li class="custom-select-option" role="option" data-value="google_maps" aria-selected="false">Google Maps / Business Profile</li>
+                    <li class="custom-select-option" role="option" data-value="instagram" aria-selected="false">Instagram</li>
+                    <li class="custom-select-option" role="option" data-value="facebook" aria-selected="false">Facebook</li>
+                    <li class="custom-select-option" role="option" data-value="tiktok" aria-selected="false">TikTok</li>
+                    <li class="custom-select-option" role="option" data-value="friend_family" aria-selected="false">Friend or Family Referral</li>
+                    <li class="custom-select-option" role="option" data-value="vet_groomer" aria-selected="false">My Vet or Groomer</li>
+                    <li class="custom-select-option" role="option" data-value="nextdoor" aria-selected="false">Nextdoor</li>
+                    <li class="custom-select-option" role="option" data-value="other" aria-selected="false">Other</li>
+                  </ul>
+                  <input type="hidden" name="referral_source" id="referral_source" value="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Tell me about your dog and what's going on <span style="color:var(--amber)">*</span></label>
                 <textarea id="message" name="message" rows="5" placeholder="Anything you can share helps: what behaviors you're dealing with, how long it's been going on, what you've tried, what you're hoping for..." required></textarea>
               </div>
 
@@ -579,50 +602,63 @@
   <script src="js/main.js"></script>
   <script>
     (function () {
-      var wrapper  = document.getElementById('service-select');
-      var trigger  = document.getElementById('service-trigger');
-      var listbox  = document.getElementById('service-listbox');
-      var display  = trigger.querySelector('.custom-select-value');
-      var hidden   = document.getElementById('service');
-      var options  = Array.from(listbox.querySelectorAll('.custom-select-option'));
-      var banner   = document.getElementById('service-banner');
-      var nameEl   = document.getElementById('service-banner-name');
+      // Generic initializer for the custom dropdown widgets used on this form.
+      function initCustomSelect(wrapperId, triggerId, listboxId, hiddenId, onPick) {
+        var wrapper = document.getElementById(wrapperId);
+        var trigger = document.getElementById(triggerId);
+        var listbox = document.getElementById(listboxId);
+        if (!wrapper || !trigger || !listbox) return null;
 
-      var labels = {
+        var display = trigger.querySelector('.custom-select-value');
+        var hidden  = document.getElementById(hiddenId);
+        var options = Array.from(listbox.querySelectorAll('.custom-select-option'));
+
+        function open()  { wrapper.classList.add('is-open');    trigger.setAttribute('aria-expanded','true'); }
+        function close() { wrapper.classList.remove('is-open'); trigger.setAttribute('aria-expanded','false'); }
+
+        function pick(value, label) {
+          hidden.value = value;
+          display.textContent = label;
+          display.classList.toggle('placeholder', !value);
+          options.forEach(function(o){ o.setAttribute('aria-selected', o.dataset.value===value ? 'true':'false'); });
+          close();
+          if (onPick) onPick(value, label);
+        }
+
+        trigger.addEventListener('click', function(){ wrapper.classList.contains('is-open') ? close() : open(); });
+
+        options.forEach(function(opt){
+          opt.addEventListener('click', function(){ pick(opt.dataset.value, opt.textContent.trim()); });
+        });
+
+        document.addEventListener('click', function(e){ if (!wrapper.contains(e.target)) close(); });
+
+        return { pick: pick, options: options };
+      }
+
+      var serviceLabels = {
         private:  'Private 1-on-1 Sessions',
         group:    'Group Training Classes',
         puppy:    'Puppy Foundation Training',
         behavior: 'Behavioral Problem-Solving',
         consult:  'Free Phone Consult'
       };
+      var banner = document.getElementById('service-banner');
+      var nameEl = document.getElementById('service-banner-name');
 
-      function open()  { wrapper.classList.add('is-open');    trigger.setAttribute('aria-expanded','true'); }
-      function close() { wrapper.classList.remove('is-open'); trigger.setAttribute('aria-expanded','false'); }
-
-      function pick(value, label) {
-        hidden.value = value;
-        display.textContent = label;
-        display.classList.toggle('placeholder', !value);
-        options.forEach(function(o){ o.setAttribute('aria-selected', o.dataset.value===value ? 'true':'false'); });
-        close();
+      var serviceSelect = initCustomSelect('service-select', 'service-trigger', 'service-listbox', 'service', function(value){
         if (banner && nameEl) {
-          if (labels[value]) { nameEl.textContent = labels[value]; banner.removeAttribute('hidden'); }
+          if (serviceLabels[value]) { nameEl.textContent = serviceLabels[value]; banner.removeAttribute('hidden'); }
           else { banner.setAttribute('hidden',''); }
         }
-      }
-
-      trigger.addEventListener('click', function(){ wrapper.classList.contains('is-open') ? close() : open(); });
-
-      options.forEach(function(opt){
-        opt.addEventListener('click', function(){ pick(opt.dataset.value, opt.textContent.trim()); });
       });
 
-      document.addEventListener('click', function(e){ if (!wrapper.contains(e.target)) close(); });
+      initCustomSelect('referral-select', 'referral-trigger', 'referral-listbox', 'referral_source');
 
       var param = new URLSearchParams(window.location.search).get('service');
-      if (param) {
-        var match = options.find(function(o){ return o.dataset.value === param; });
-        if (match) pick(param, match.textContent.trim());
+      if (param && serviceSelect) {
+        var match = serviceSelect.options.find(function(o){ return o.dataset.value === param; });
+        if (match) serviceSelect.pick(param, match.textContent.trim());
       }
     })();
   </script>
