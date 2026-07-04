@@ -98,6 +98,85 @@
     });
   });
 
+  // ── Hero image carousel ───────────────────────────
+  const heroA = document.querySelector('#hero-photo-a');
+  const heroB = document.querySelector('#hero-photo-b');
+  const heroCaption = document.querySelector('#hero-caption');
+
+  if (heroA && heroB) {
+    const slides = [
+      { src: 'img/trainer-hero.jpg', caption: 'Dan & Reggie' },
+      { src: 'img/hero-lab-gsd.jpg', caption: 'Well-mannered pack' },
+      { src: 'img/hero-puppy.jpg', caption: 'Puppy foundations' },
+      { src: 'img/hero-lab-bed.jpg', caption: 'Calm at home' },
+      { src: 'img/hero-gsd-ball.jpg', caption: 'Playtime, on cue' },
+      { src: 'img/hero-family-walk.jpg', caption: 'Family walks' },
+      { src: 'img/hero-goldendoodle.jpg', caption: 'Loose-leash walking' }
+    ];
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduceMotion && slides.length > 1) {
+      slides.forEach(s => { const img = new Image(); img.src = s.src; });
+
+      let index = 0;
+      let showingA = true;
+
+      setInterval(() => {
+        index = (index + 1) % slides.length;
+        const incoming = showingA ? heroB : heroA;
+        const outgoing = showingA ? heroA : heroB;
+
+        incoming.src = slides[index].src;
+        incoming.classList.add('is-active');
+        outgoing.classList.remove('is-active');
+        if (heroCaption) heroCaption.textContent = slides[index].caption;
+
+        showingA = !showingA;
+      }, 5000);
+    }
+  }
+
+  // ── Testimonial carousel ──────────────────────────
+  const testimonialCards = document.querySelectorAll('.testimonial-card');
+  const testimonialDots = document.querySelectorAll('.testimonial-dot');
+
+  if (testimonialCards.length > 1) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let tIndex = 0;
+    let tTimer = null;
+
+    function showTestimonial(i) {
+      tIndex = i;
+      testimonialCards.forEach((card, idx) => card.classList.toggle('is-active', idx === i));
+      testimonialDots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === i);
+        dot.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+      });
+    }
+
+    function startAutoplay() {
+      if (reduceMotion) return;
+      tTimer = setInterval(() => {
+        showTestimonial((tIndex + 1) % testimonialCards.length);
+      }, 6000);
+    }
+
+    function stopAutoplay() {
+      if (tTimer) clearInterval(tTimer);
+    }
+
+    testimonialDots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        showTestimonial(idx);
+        stopAutoplay();
+        startAutoplay();
+      });
+    });
+
+    startAutoplay();
+  }
+
   // ── Contact form ──────────────────────────────────
   const form = document.querySelector('#contact-form');
   if (form) {
@@ -124,12 +203,12 @@
             btn.style.background = '';
           }, 3500);
         } else {
-          btn.textContent = 'Something went wrong — try again';
+          btn.textContent = 'Something went wrong. Try again';
           btn.disabled = false;
         }
       })
       .catch(() => {
-        btn.textContent = 'Something went wrong — try again';
+        btn.textContent = 'Something went wrong. Try again';
         btn.disabled = false;
       });
     });

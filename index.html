@@ -85,6 +85,18 @@
         "author": {"@type": "Person", "name": "Carolyn T."},
         "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
         "reviewBody": "One of my favorite parts of Dan's training style is that he works in your home, in your dog's natural environment. He didn't just learn to listen to Dan — he learned to listen to all of us. Training us was just as important as training our dog. It's set us up to keep improving and maintain the good habits. I highly recommend Dan — I promise you won't regret it!"
+      },
+      {
+        "@type": "Review",
+        "author": {"@type": "Person", "name": "James"},
+        "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+        "reviewBody": "Before working with Dan, our dog would jump on people, steal food off the counter, and had a bad habit of chewing things around the house. Dan took the time to work not only with our dog, but also with us, making sure we understood how to reinforce the training at home. The results have been incredible. Our dog rarely jumps on people anymore, has completely stopped counter surfing, and only chews on his toys. I highly recommend Kindred K9 to anyone looking for a knowledgeable and effective trainer. My only regret is not calling Dan when our dog was a puppy!"
+      },
+      {
+        "@type": "Review",
+        "author": {"@type": "Person", "name": "Colton Mooney"},
+        "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+        "reviewBody": "Awesome trainer that genuinely cares about the dog. Huge improvement in our german shepherd after a week of working with him. Highly recommend!"
       }
     ],
     "hasOfferCatalog": {
@@ -110,7 +122,7 @@
           "itemOffered": {
             "@type": "Service",
             "name": "Private Dog Training – 5 Sessions",
-            "description": "Five in-home private training sessions. $102/session — save $40 vs. single session rate."
+            "description": "Five in-home private training sessions. $102 per session, a $40 savings vs. the single-session rate."
           }
         },
         {
@@ -121,7 +133,7 @@
           "itemOffered": {
             "@type": "Service",
             "name": "Private Dog Training – 10 Sessions",
-            "description": "Ten in-home private training sessions. $95/session — save $150 vs. single session rate."
+            "description": "Ten in-home private training sessions. $95 per session, a $150 savings vs. the single-session rate."
           }
         },
         {
@@ -143,7 +155,7 @@
           "itemOffered": {
             "@type": "Service",
             "name": "Group Dog Training – 6-Week Course",
-            "description": "Full 6-week group training course per dog. $37/class — save $32 vs. drop-in rate."
+            "description": "Full 6-week group training course per dog. $37 per class, a $32 savings vs. the drop-in rate."
           }
         },
         {
@@ -302,7 +314,8 @@
             <div class="corner corner-tr"></div>
             <div class="corner corner-bl"></div>
             <div class="corner corner-br"></div>
-            <img src="img/trainer-hero.jpg" alt="Dan and Reggie" class="hero-photo">
+            <img src="img/trainer-hero.jpg" alt="" class="hero-photo is-active" id="hero-photo-a">
+            <img src="" alt="" class="hero-photo" id="hero-photo-b">
             <div class="hero-image-label">
               <div>
                 <div class="label-stars">★★★★★</div>
@@ -310,7 +323,7 @@
               </div>
               <div class="label-divider"></div>
               <div>
-                <p class="label-name">Dan &amp; Reggie</p>
+                <p class="label-name" id="hero-caption">Dan &amp; Reggie</p>
               </div>
             </div>
           </div>
@@ -353,8 +366,8 @@
           <span class="eyebrow">What We Offer</span>
           <h2 id="services-heading">Training built around <em>your</em> dog</h2>
           <p>
-            Every dog is different. Whether you've got a wild puppy or a stubborn four-year-old
-            who's picked up some bad habits — there's a path forward, and we'll find it together.
+            Every dog is different. Maybe you've got a wild puppy, or a stubborn four-year-old
+            who's picked up some bad habits. Either way, there's a path forward, and we'll find it together.
           </p>
         </div>
 
@@ -395,7 +408,7 @@
               </svg>
             </div>
             <h3>Private 1-on-1 Sessions</h3>
-            <p>Focused, distraction-free training tailored to your dog's exact needs and your goals at home.</p>
+            <p>Manners, obedience, and life skills built through focused, one-on-one coaching in your home.</p>
             <div class="service-price">
               <span class="amount">$110</span>
               <span class="label">/ session</span>
@@ -409,7 +422,7 @@
               </svg>
             </div>
             <h3>Behavioral Problem-Solving</h3>
-            <p>Jumping, leash pulling, reactivity, anxiety. Whatever the issue is, we'll find the root cause and build a real solution.</p>
+            <p>Reactivity, aggression, fear, and anxiety. We'll find the root cause behind the behavior and build a real solution.</p>
             <div class="service-price">
               <span class="amount">$150</span>
               <span class="label">/ assessment</span>
@@ -475,7 +488,7 @@
 
         <div class="reviews-badge-wrap" data-animate>
           <a href="https://g.page/r/CReAidDRQq91EBI" target="_blank" rel="noopener"
-             class="reviews-badge" aria-label="Rated 5.0 out of 5 on Google — read all reviews">
+             class="reviews-badge" aria-label="Rated 5.0 out of 5 on Google. Read all reviews.">
             <svg class="reviews-badge__logo" aria-hidden="true" focusable="false"><use href="#google-g"></use></svg>
             <span class="reviews-badge__stars" aria-hidden="true">★★★★★</span>
             <span class="reviews-badge__label"><strong>5.0</strong> on Google</span>
@@ -484,11 +497,13 @@
 
         <!--
           To feature a new review: copy one .testimonial-card block below, then update the
-          avatar letter, blockquote, name, and meta. Only use reviews actually posted on the
-          Google profile so the "5.0 on Google" badge above stays truthful.
+          avatar letter, blockquote, name, and meta. Also add a matching .testimonial-dot
+          button in .testimonial-dots below (update its aria-label index) so the count of
+          dots matches the count of cards. Only use reviews actually posted on the Google
+          profile so the "5.0 on Google" badge above stays truthful.
         -->
-        <div class="testimonials-grid">
-          <div class="testimonial-card" data-animate data-delay="1">
+        <div class="testimonials-grid" data-animate>
+          <div class="testimonial-card is-active">
             <div class="testimonial-stars">★★★★★</div>
             <blockquote>
               "I wouldn't say our lab was a 'bad' dog before hiring Dan, but it has been a night
@@ -510,7 +525,7 @@
             </div>
           </div>
 
-          <div class="testimonial-card" data-animate data-delay="2">
+          <div class="testimonial-card">
             <div class="testimonial-stars">★★★★★</div>
             <blockquote>
               "One of my favorite parts of Dan's training style is that he works in your home,
@@ -531,6 +546,56 @@
               </span>
             </div>
           </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <blockquote>
+              "Before working with Dan, our dog would jump on people, steal food off the counter,
+              and had a bad habit of chewing things around the house. Dan took the time to work not
+              only with our dog, but also with us, making sure we understood how to reinforce the
+              training at home. The results have been incredible. Our dog rarely jumps on people
+              anymore, has completely stopped counter surfing, and only chews on his toys. I highly
+              recommend Kindred K9 to anyone looking for a knowledgeable and effective trainer. My
+              only regret is not calling Dan when our dog was a puppy!"
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">J</div>
+              <div>
+                <p class="testimonial-name">James</p>
+                <p class="testimonial-meta">Weber County, UT · Doberman owner</p>
+              </div>
+              <span class="testimonial-source" aria-label="Posted on Google">
+                <svg class="testimonial-source__logo" aria-hidden="true" focusable="false"><use href="#google-g"></use></svg>
+                Google
+              </span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <blockquote>
+              "Awesome trainer that genuinely cares about the dog. Huge improvement in our german
+              shepherd after a week of working with him. Highly recommend!"
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">C</div>
+              <div>
+                <p class="testimonial-name">Colton Mooney</p>
+                <p class="testimonial-meta">Davis County, UT · German Shepherd owner</p>
+              </div>
+              <span class="testimonial-source" aria-label="Posted on Google">
+                <svg class="testimonial-source__logo" aria-hidden="true" focusable="false"><use href="#google-g"></use></svg>
+                Google
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-dots" role="tablist" aria-label="Select testimonial">
+          <button type="button" class="testimonial-dot is-active" role="tab" aria-selected="true" aria-label="Show testimonial 1"></button>
+          <button type="button" class="testimonial-dot" role="tab" aria-selected="false" aria-label="Show testimonial 2"></button>
+          <button type="button" class="testimonial-dot" role="tab" aria-selected="false" aria-label="Show testimonial 3"></button>
+          <button type="button" class="testimonial-dot" role="tab" aria-selected="false" aria-label="Show testimonial 4"></button>
         </div>
 
         <div class="reviews-cta" data-animate>

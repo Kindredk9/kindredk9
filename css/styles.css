@@ -360,8 +360,10 @@ em { color: var(--cyan); font-style: normal; }
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: center top;
-  z-index: 1;
+  z-index: 1; opacity: 0;
+  transition: opacity 1.2s ease-in-out;
 }
+.hero-photo.is-active { opacity: 1; z-index: 2; }
 
 /* Circuit corner brackets — used on .hero-image and .about-photo */
 .corner {
@@ -516,16 +518,30 @@ em { color: var(--cyan); font-style: normal; }
    TESTIMONIALS
 ===================== */
 .testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.25rem;
+  position: relative;
+  max-width: 640px; margin: 0 auto;
+  overflow: hidden;
 }
 .testimonial-card {
+  position: absolute; top: 0; left: 0; width: 100%;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 2rem;
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), opacity 0.5s ease;
+  opacity: 0; pointer-events: none;
 }
+.testimonial-card.is-active { position: relative; opacity: 1; pointer-events: auto; }
 .testimonial-card:hover { border-color: rgba(0,200,185,0.35); }
+
+/* Dot navigation below the testimonial carousel */
+.testimonial-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+.testimonial-dot {
+  width: 9px; height: 9px; padding: 0; border-radius: 50%;
+  background: var(--surface2); border: 1px solid var(--border);
+  cursor: pointer; transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.testimonial-dot:hover { border-color: var(--cyan); }
+.testimonial-dot.is-active { background: var(--cyan); border-color: var(--cyan); transform: scale(1.2); }
+.testimonial-dot:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 .testimonial-stars { color: var(--amber); font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 2px; }
 .testimonial-card blockquote {
   font-size: 1rem; font-style: italic;
@@ -884,9 +900,10 @@ select option { background: var(--surface); color: var(--text); }
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
   padding-bottom: 3rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem;
 }
+.footer-brand { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .footer-brand .nav-logo { color: white; margin-bottom: 1rem; }
 .footer-brand > p { font-size: 0.9rem; color: var(--text-muted); max-width: 30ch; margin-bottom: 1.375rem; }
-.footer-social { display: flex; gap: 0.625rem; }
+.footer-social { display: flex; justify-content: center; gap: 0.625rem; }
 .footer-social a {
   width: 36px; height: 36px; border-radius: var(--radius);
   background: var(--surface); border: 1px solid var(--border);
@@ -972,7 +989,6 @@ select option { background: var(--surface); color: var(--text); }
   .footer-bottom { flex-direction: column; text-align: center; }
 
   .trust-sep { display: none; }
-  .testimonials-grid { grid-template-columns: 1fr; }
   .section { padding: 4rem 0; }
   .cta-banner { padding: 4rem 0; }
 }
