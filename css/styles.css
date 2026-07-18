@@ -726,11 +726,11 @@ em { color: var(--cyan); font-style: normal; }
   color: var(--text-muted); line-height: 1.8; margin: 0 0 1.25rem;
   display: flex; flex-direction: column; gap: 0.625rem;
 }
-.article-body li { display: flex; align-items: flex-start; gap: 0.625rem; }
+.article-body li { position: relative; padding-left: 1.125rem; }
 .article-body ul li::before {
-  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  content: ''; position: absolute; left: 0; top: 0.65em;
+  width: 5px; height: 5px; border-radius: 50%;
   background: var(--cyan); box-shadow: 0 0 6px var(--cyan);
-  margin-top: 0.65em; flex-shrink: 0;
 }
 .article-body strong { color: var(--text); }
 .article-body a { color: var(--cyan); }
@@ -745,7 +745,7 @@ em { color: var(--cyan); font-style: normal; }
 .article-callout strong { color: var(--cyan); }
 
 .blog-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 1.75rem;
 }
 .blog-card {
