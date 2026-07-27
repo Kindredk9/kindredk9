@@ -112,7 +112,8 @@
       { src: 'img/hero-gsd-ball.jpg', caption: 'Playtime, on cue' },
       { src: 'img/hero-family-walk.jpg', caption: 'Family walks' },
       { src: 'img/hero-goldendoodle.jpg', caption: 'Loose-leash walking' },
-      { src: 'img/hero-poodle-moose.jpg', caption: 'Happy at home' }
+      { src: 'img/hero-poodle-moose.jpg', caption: 'Happy at home' },
+      { src: 'img/hero-doodle-park.jpg', caption: 'Trained & trusted' }
     ];
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
