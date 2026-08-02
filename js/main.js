@@ -108,6 +108,7 @@
       { src: 'img/trainer-hero.jpg', caption: 'Dan & Reggie' },
       { src: 'img/hero-lab-gsd.jpg', caption: 'Well-mannered pack' },
       { src: 'img/hero-puppy.jpg', caption: 'Puppy foundations' },
+      { src: 'img/hero-targa-walk.jpg', caption: 'Confident on leash' },
       { src: 'img/hero-lab-bed.jpg', caption: 'Calm at home' },
       { src: 'img/hero-gsd-ball.jpg', caption: 'Playtime, on cue' },
       { src: 'img/hero-family-walk.jpg', caption: 'Family walks' },
