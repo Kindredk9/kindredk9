@@ -162,7 +162,7 @@
       if (reduceMotion) return;
       tTimer = setInterval(() => {
         showTestimonial((tIndex + 1) % testimonialCards.length);
-      }, 6000);
+      }, 12000);
     }
 
     function stopAutoplay() {
