@@ -5,6 +5,26 @@
 (function () {
   'use strict';
 
+  // ── Self-updating content ─────────────────────────
+  // Footer copyright year: any <span data-current-year> shows the live year.
+  document.querySelectorAll('[data-current-year]').forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // Live ages: tag any element with data-age-since="YYYY-MM-DD" (a birthdate)
+  // and it will always display the current whole-number age.
+  document.querySelectorAll('[data-age-since]').forEach(el => {
+    const birth = new Date(el.getAttribute('data-age-since') + 'T00:00:00');
+    if (isNaN(birth.getTime())) return;
+    const now = new Date();
+    let age = now.getFullYear() - birth.getFullYear();
+    const beforeBirthday =
+      now.getMonth() < birth.getMonth() ||
+      (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate());
+    if (beforeBirthday) age -= 1;
+    if (age >= 0) el.textContent = String(age);
+  });
+
   // ── Navigation scroll effect ──────────────────────
   const nav = document.querySelector('.site-nav');
   if (nav) {
