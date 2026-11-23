@@ -1099,7 +1099,7 @@ select option { background: var(--surface); color: var(--text); }
 }
 
 @media (max-width: 480px) {
-  .hero-badge { display: none; }
+  .hero-badge { font-size: 0.62rem; letter-spacing: 0.12em; padding: 0.35rem 0.8rem; }
   .hero-trust { gap: 1rem; }
   .services-grid { grid-template-columns: 1fr; }
   .section { padding: 3rem 0; }
